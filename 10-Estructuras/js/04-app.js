@@ -1,9 +1,11 @@
-const metodoPago = 'efectivo';
-switch (metodoPago){
-    case 'efectivo':
-        console.log(`Pagaste con ${metodoPago}`)
-        break;
-    case 'cheque':
-        console.log(`Pagaste con  ${metodoPago}`)
-        default: console.log('Aun no seleccionaste tu metodo de pago o un metodo no es soportado')
+const dinero = 500;
+const total_a_pagar =300;
+const tarjeta = true
+
+if(dinero <= total_a_pagar){
+   console.log('si podemos pagar');
+}else if(tarjeta){
+    console.log("si podemos pagar");
+}else{
+   console.log('fondos insuficientes');
 }
