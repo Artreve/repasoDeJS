@@ -1,6 +1,7 @@
 //variables
 const btnEnviar = document.querySelector("#enviar");
 const formulario = document.querySelector("#enviar-mail");
+const btnReset = document.querySelector("#resetBtn");
 //Aplicando expresion regular. Es la manera mas profecional de relizar una validacion
 const er =
   /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -16,6 +17,9 @@ function eventListeners() {
   email.addEventListener("blur", validarForm);
   asunto.addEventListener("blur", validarForm);
   mensaje.addEventListener("blur", validarForm);
+
+  //reiniciar formulario
+  btnReset.addEventListener("click", resetearForm);
 
   //fomulario
   formulario.addEventListener("submit", enviarEmail);
@@ -92,22 +96,33 @@ function mostrarError(mensaje) {
 function enviarEmail(e) {
   e.preventDefault();
 
-  const spiner = document.querySelector('#spinner')
-  spiner.style.display = 'flex'
-  setTimeout(()=>{
+  const spiner = document.querySelector("#spinner");
+  spiner.style.display = "flex";
+  setTimeout(() => {
     //desaparecemos el spinner
-    spiner.style.display ='none'
+    spiner.style.display = "none";
     //mensaje
-    const parrafo = document.createElement('p')
-    parrafo.textContent = 'El mensaje se envio correctamente'
-    parrafo.classList.add("border",
-    "border-red-500",
-    "backgraund-red-100",
-    "text-green-500",
-    "p-3",
-    "m-5",
-    "text-center")
+    const parrafo = document.createElement("p");
+    parrafo.textContent = "El mensaje se envio correctamente";
+    parrafo.classList.add(
+      "border",
+      "border-green-500",
+      "backgraund-red-100",
+      "text-green-500",
+      "p-3",
+      "m-5",
+      "text-center"
+    );
     //cargamos en el documento
-    formulario.insertBefore(parrafo, spiner)
-  }, 3000)
+    formulario.insertBefore(parrafo, spiner);
+    setTimeout(() => {
+      parrafo.remove();
+      iniciarApp();
+    }, 2000);
+  }, 3000);
+}
+
+function resetearForm() {
+  formulario.reset();
+  iniciarApp();
 }
