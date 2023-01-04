@@ -18,6 +18,9 @@ class Citas {
   eliminarCita(id) {
     this.citas = this.citas.filter((cita) => cita.id !== id);
   }
+  editarCita(citaActualizada){
+    this.citas=this.citas.map(cita => cita.id === citaActualizada.id ? citaActualizada : cita)
+  }
 }
 class UI {
   imprimirAlerta(mensaje, tipo) {
@@ -150,13 +153,20 @@ function nuevaCita(e) {
     return;
   }
   if (editando) {
+    ui.imprimirAlerta("editado correctamente");
+    //pasar el objeto a edicion
+    administrarCitas.editarCita({...citaObj})
 
-  }else{
+    //cambiar el texto del boton
+    formulario.querySelector('button[type="submit"]').textContent =
+      "GuardarCambios";
+    editando = false;
+  } else {
     //Generar un id unico
     citaObj.id = Date.now();
     //Crear nueva cita
     administrarCitas.agregarCita({ ...citaObj }); //Para evitar que se carguen elementos repetidos, crearemos una copia del objeto global y cuando le pasemos el objeto de cita no le pasaremos el objeto global y asi evitaremos que cada vez que se carge algo, se repitan los valores ya cargados
-    ui.imprimirAlerta('Se agrego correctamente')
+    ui.imprimirAlerta("Se agrego correctamente");
   }
   reiniciarObjeto();
   formulario.reset(); //reinicia el formulario
